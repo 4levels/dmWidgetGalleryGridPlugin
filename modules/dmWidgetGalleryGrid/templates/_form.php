@@ -41,6 +41,14 @@ _tag('div#'.$baseTabId.'_thumbnails',
       $form['rows']->render().
       $form['margin']->label(null, array('class' => 'ml10 mr10 fnone'))->field('.dm_media_margin')->error()
     ).
+    _tag('li.dm_form_element.multi_inputs.thumbnail.clearfix',
+      $form['big_width']->renderError().
+      $form['big_height']->renderError().
+      _tag('label', __('Zoomed size')).
+      $form['big_width']->render().
+      'x'.
+      $form['big_height']->render()
+    ).
     _tag('li.dm_form_element.multi_inputs.background.clearfix.none',
       $form['width']->renderError().
       $form['background']->label()->field()->error()

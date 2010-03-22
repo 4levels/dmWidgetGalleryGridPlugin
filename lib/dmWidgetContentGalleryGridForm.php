@@ -67,10 +67,15 @@ class dmWidgetContentGalleryGridForm extends dmWidgetPluginForm
     $this->validatorSchema['margin'] = new dmValidatorCssSize(array(
       'required' => false
     ));
-    if (!$this->hasDefault('margin'))
-    {
-      $this->setDefault('margin', 10);
-    }
+
+    $this->widgetSchema['big_width'] = new sfWidgetFormInputText(array(), array('size' => 5));
+    $this->validatorSchema['big_width'] = new dmValidatorCssSize(array(
+      'required' => false
+    ));
+    $this->widgetSchema['big_height'] = new sfWidgetFormInputText(array(), array('size' => 5));
+    $this->validatorSchema['big_height'] = new dmValidatorCssSize(array(
+      'required' => false
+    ));
 
     $methods = $this->getService('i18n')->translateArray(self::$methods);
     $this->widgetSchema['method'] = new sfWidgetFormSelect(array(

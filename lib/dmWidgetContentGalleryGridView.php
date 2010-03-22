@@ -75,12 +75,21 @@ class dmWidgetContentGalleryGridView extends dmWidgetPluginView
       {
         $mediaTag->quality($quality);
       }
+
+      $big = $this->getHelper()->media($mediaRecord);
+      if (!empty($vars['big_width'])) {
+        if (!empty($vars['big_height'])) {
+          $big = $big->size($vars['big_width'].'x'.$vars['big_height']);
+        } else {
+          $big = $big->size($vars['big_width']);
+        }
+      }
       
       $medias[] = array(
         'tag'   => $mediaTag,
         'link'  => $vars['medias'][$index]['link'],
         'title' => $vars['medias'][$index]['alt'],
-        'src'   => $this->getHelper()->media($mediaRecord)->getSrc()
+        'src'   => $big->getSrc()
       );
     }
   
