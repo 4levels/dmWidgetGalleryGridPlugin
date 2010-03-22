@@ -1,0 +1,13 @@
+js:
+
+  dmWidgetGalleryGridPlugin:
+    
+    view:      view
+    form:      form
+
+css:
+
+  dmWidgetGalleryGridPlugin:
+    
+    view:      view
+    form:      form
