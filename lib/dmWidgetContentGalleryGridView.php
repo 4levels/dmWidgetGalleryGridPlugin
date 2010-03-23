@@ -7,7 +7,7 @@ class dmWidgetContentGalleryGridView extends dmWidgetPluginView
   {
     parent::configure();
     
-    $this->addRequiredVar(array('medias', 'method', 'animation'));
+    $this->addRequiredVar(array('medias', 'method', 'transition'));
 
     $this->addJavascript(array('dmWidgetGalleryGridPlugin.view', 'lib.colorbox'));
     $this->addStylesheet(array('lib.colorbox'));
@@ -92,6 +92,16 @@ class dmWidgetContentGalleryGridView extends dmWidgetPluginView
         'src'   => $big->getSrc()
       );
     }
+
+    // check colorbox config options
+    if (isset($vars['config']) && !empty($vars['config'])) {
+//      if (strpos($vars['config'], '{') !== 0) {
+//        $vars['config'] = '['.$vars['config'].']';
+//      }
+      $vars['config'] = sfYaml::load($vars['config']);
+    } else {
+      $vars['config'] = array();
+    }
   
     // replace media configuration by media tags
     $vars['medias'] = $medias;
@@ -121,10 +131,11 @@ class dmWidgetContentGalleryGridView extends dmWidgetPluginView
     $vars = $this->getViewVars();
     $helper = $this->getHelper();
 
-    $html = $helper->open('ol.dm_widget_content_gallery_grid.list', array('json' => array(
-      'animation' => $vars['animation'],
-      'delay'     => dmArray::get($vars, 'delay', 3)
-    )));
+    $html = $helper->open('ol.dm_widget_content_gallery_grid.list', array('json' => array_merge(array(
+      'transition' => $vars['transition'],
+      'speed'     => dmArray::get($vars, 'speed', 350),
+      'opacity'     => dmArray::get($vars, 'opacity', .85)
+    ), $vars['config'])));
 
     foreach($vars['medias'] as $media)
     {

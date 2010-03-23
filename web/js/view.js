@@ -12,9 +12,15 @@
 
     // get options from gallery metadata
     var options = $galleryGrid.metadata();
+//    alert(options);
+//    for (i in options) {
+//      alert('k'+i+' v'+options[i]);
+//    }
 
     // attach colorbox
-    $galleryGrid.find('>li a.gallery_grid_link').colorbox();
+    $galleryGrid.find('>li a.gallery_grid_link').colorbox(
+      options
+    );
 
   });
 

@@ -8,9 +8,10 @@ class dmWidgetContentGalleryGridForm extends dmWidgetPluginForm
     'scale' => 'Scale',
     'inflate' => 'Inflate'
   ),
-  $animations = array(
+  $transitions = array(
     'elastic' => 'Elastic',
-    'custom'    => 'Custom'
+    'fade'    => 'Fade',
+    'none'    => 'None'
   );
 
   public function configure()
@@ -89,28 +90,35 @@ class dmWidgetContentGalleryGridForm extends dmWidgetPluginForm
       $this->setDefault('method', dmConfig::get('image_resize_method', 'center'));
     }
 
-    $animations = $this->getService('i18n')->translateArray(self::$animations);
-    $this->widgetSchema['animation'] = new sfWidgetFormSelect(array(
-      'choices' => $animations
+    $transitions = $this->getService('i18n')->translateArray(self::$transitions);
+    $this->widgetSchema['transition'] = new sfWidgetFormSelect(array(
+      'choices' => $transitions
     ));
-    $this->validatorSchema['animation'] = new sfValidatorChoice(array(
-      'choices' => array_keys($animations)
+    $this->validatorSchema['transition'] = new sfValidatorChoice(array(
+      'choices' => array_keys($transitions)
     ));
-    if (!$this->getDefault('animation'))
+    if (!$this->getDefault('transition'))
     {
-      $this->setDefault('animation', dmArray::first(array_keys($animations)));
+      $this->setDefault('transition', dmArray::first(array_keys($transitions)));
     }
 
     $this->widgetSchema['speed'] = new sfWidgetFormInputText(array(), array('size' => 5));
     $this->validatorSchema['speed'] = new sfValidatorNumber(array(
       'required' => false,
       'min' => 0,
-      'max' => 1000
+      'max' => 2000
     ));
-    if (!$this->hasDefault('speed'))
-    {
-      $this->setDefault('speed', 0);
-    }
+    $this->widgetSchema['opacity'] = new sfWidgetFormInputText(array(), array('size' => 5));
+    $this->validatorSchema['opacity'] = new sfValidatorNumber(array(
+      'required' => false,
+      'min' => 0,
+      'max' => 1
+    ));
+
+    $this->widgetSchema['config'] = new sfWidgetFormTextarea(array(), array('cols' => 15, 'rows' => 3));
+    $this->validatorSchema['config'] = new sfValidatorString(array(
+      'required' => false
+    ));
 
     $this->widgetSchema['quality'] = new sfWidgetFormInputText(array(), array('size' => 5));
     $this->validatorSchema['quality'] = new sfValidatorInteger(array(
@@ -124,10 +132,10 @@ class dmWidgetContentGalleryGridForm extends dmWidgetPluginForm
       $this->setDefault('medias', array());
     }
 
-    $this->widgetSchema['background'] = new sfWidgetFormInputText(array(), array('size' =>7));
-    $this->validatorSchema['background'] = new sfValidatorString(array(
-      'required' => false
-    ));
+//    $this->widgetSchema['background'] = new sfWidgetFormInputText(array(), array('size' =>7));
+//    $this->validatorSchema['background'] = new sfValidatorString(array(
+//      'required' => false
+//    ));
     
     $this->validatorSchema['widget_width'] = new sfValidatorInteger(array('required' => false));
 

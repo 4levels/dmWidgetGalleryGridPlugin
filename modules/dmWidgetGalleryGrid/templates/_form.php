@@ -50,8 +50,7 @@ _tag('div#'.$baseTabId.'_thumbnails',
       $form['big_height']->render()
     ).
     _tag('li.dm_form_element.multi_inputs.background.clearfix.none',
-      $form['width']->renderError().
-      $form['background']->label()->field()->error()
+      $form['width']->renderError()
     ).
     _tag('li.dm_form_element.quality.clearfix',
       $form['quality']->label(__('JPG quality'))->field()->error().
@@ -63,14 +62,23 @@ _tag('div#'.$baseTabId.'_thumbnails',
 
 _tag('div#'.$baseTabId.'_effects',
   _tag('ul',
-    _tag('li.dm_form_element.animation.clearfix',
-      $form['animation']->label(__('Animation'))->field()->error().
-      _tag('p.dm_help', __('Set to custom to write your own animation'))
+    _tag('li.dm_form_element.transition.clearfix',
+      $form['transition']->label(__('Transition'))->field()->error()
     ).
-    _tag('li.dm_form_element.delay.clearfix',
+    _tag('li.dm_form_element.speed.clearfix',
       $form['speed']->label(__('Speed'))->field()->error().
       _tag('p.dm_help', __('The Colorbox speed setting')).
-      _tag('p.dm_help', __('Leave empty to use default colorbox speed'))
+      _tag('p.dm_help', __('Leave empty to use default colorbox speed 350'))
+    ).
+    _tag('li.dm_form_element.opacity.clearfix',
+      $form['opacity']->label(__('Opacity'))->field()->error().
+      _tag('p.dm_help', __('The Colorbox opacity setting')).
+      _tag('p.dm_help', __('Leave empty to use default opacity 0.85'))
+    ).
+    _tag('li.dm_form_element.config.clearfix',
+      $form['config']->label(__('Config'))->field()->error().
+      _tag('p.dm_help', __('The Colorbox extra config settings')).
+      _tag('p.dm_help', __('Leave empty to use default colorbox config'))
     )
   )
 ),
